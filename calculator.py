@@ -23,9 +23,11 @@ class Calculator():
             answer = eval(num_one + operator + num_two)
         except ZeroDivisionError:
             answer = "undefined"
+            raise ZeroDivisionError
         finally:
             print(f"{num_one} {operator} {num_two} = {answer}")
-
+            return answer
+        
 def check_num_input(number_as_string):
     err_msg = "You did not enter a integer or float, try again."
     if len(number_as_string) < 1:
@@ -44,6 +46,20 @@ def check_operator_input(operator):
         return True
     print(err_msg)
     return False
+
+
+def test_calculator_compute_addition():
+    calc = Calculator()
+    assert calc.compute("4", "1", "+") == 5
+
+def test_calculator_compute_multiplication():
+    calc = Calculator()
+    assert calc.compute("5", "-2", "*") == -10
+
+def test_calculator_compute_divide_by_zero():
+    calc = Calculator()
+    assert calc.compute("9", "0", "/") == "undefined"
+
 
 def main():
     while True:
